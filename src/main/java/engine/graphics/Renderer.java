@@ -1,55 +1,39 @@
 package engine.graphics;
 
 import org.joml.Matrix4f;
+import engine.game.object.Object;
 
 import java.io.IOException;
 
 public class Renderer
 {
     private final ShaderProgram shaderProgram;
-    private final Cube cube;
     private final Camera camera;
 
-    public Renderer(Camera camera) throws IOException
+    public Renderer(Camera camera, ShaderProgram shaderProgram) throws IOException
     {
         this.camera = camera;
-
-        shaderProgram = new ShaderProgram(
-                "/shaders/cube.vert",
-                "/shaders/cube.frag"
-        );
-
-        cube = new Cube();
+        this.shaderProgram = shaderProgram;
     }
 
-    public void renderCube(
-            float posX,
-            float posY,
-            float posZ,
-            float rotX,
-            float rotY,
-            float rotZ,
-            float scaleX,
-            float scaleY,
-            float scaleZ
-    )
+    public void render(Object object)
     {
         Matrix4f model = new Matrix4f()
                 .identity()
                 .translate(
-                        posX,
-                        posY,
-                        posZ
+                        object.getPozX(),
+                        object.getPozY(),
+                        object.getPozZ()
                 )
                 .rotateXYZ(
-                        (float) Math.toRadians(rotX),
-                        (float) Math.toRadians(rotY),
-                        (float) Math.toRadians(rotZ)
+                        (float) Math.toRadians(object.getRotX()),
+                        (float) Math.toRadians(object.getRotY()),
+                        (float) Math.toRadians(object.getRotZ())
                 )
                 .scale(
-                        scaleX,
-                        scaleY,
-                        scaleZ
+                        object.getScaleX(),
+                        object.getScaleY(),
+                        object.getScaleZ()
                 );
 
         shaderProgram.use();
@@ -69,14 +53,9 @@ public class Renderer
                 camera.getProjectionMatrix()
         );
 
-        cube.draw();
+        object.draw();
 
         shaderProgram.unbind();
     }
 
-    public void cleanup()
-    {
-        cube.cleanup();
-        shaderProgram.cleanup();
-    }
 }
