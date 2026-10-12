@@ -11,7 +11,7 @@ import static org.lwjgl.opengl.GL30.*;
 public class Mesh
 {
     private final int vao;
-    private final int vbo;
+        private final int vbo;
     private final int vertexCount;
 
     public Mesh(float[] vertices)

@@ -14,8 +14,8 @@ public class Window
             int width,
             int height,
             String name,
-            int monitor,
-            int share
+            long monitor,
+            long share
     )
     {
         this.width = width;
@@ -76,11 +76,6 @@ public class Window
     public int getHeight()
     {
         return height;
-    }
-
-    public String getName()
-    {
-        return name;
     }
 
     public void cleanup()

@@ -7,8 +7,8 @@ public class Camera
 {
     private final Vector3f position = new Vector3f();
 
-    private final float pitch;
-    private final float yaw;
+    private float pitch;
+    private float yaw;
 
     private final float fov;
     private final float aspect;
@@ -60,5 +60,40 @@ public class Camera
                         nearPlane,
                         farPlane
                 );
+    }
+
+    public Vector3f getPosition()
+    {
+        return position;
+    }
+
+    public float getPitch()
+    {
+        return pitch;
+    }
+
+    public float getYaw()
+    {
+        return yaw;
+    }
+
+    public void setX(float x) {
+        this.position.x = x;
+    }
+
+    public void setY(float y) {
+        this.position.y = y;
+    }
+
+    public void setZ(float z) {
+        this.position.z = z;
+    }
+
+    public void setPitch(float pitch) {
+        this.pitch = pitch;
+    }
+
+    public void setYaw(float yaw) {
+        this.yaw = yaw;
     }
 }

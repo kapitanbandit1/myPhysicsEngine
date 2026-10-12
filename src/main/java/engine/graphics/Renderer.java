@@ -1,39 +1,39 @@
 package engine.graphics;
 
+import engine.game.object.components.Graphics;
 import org.joml.Matrix4f;
-import engine.game.object.Object;
 
 import java.io.IOException;
 
 public class Renderer
 {
-    private final ShaderProgram shaderProgram;
     private final Camera camera;
 
-    public Renderer(Camera camera, ShaderProgram shaderProgram) throws IOException
+    public Renderer(Camera camera) throws IOException
     {
         this.camera = camera;
-        this.shaderProgram = shaderProgram;
     }
 
-    public void render(Object object)
+    public void render(Graphics graphicsObject)
     {
+        ShaderProgram shaderProgram = graphicsObject.getShader();
+
         Matrix4f model = new Matrix4f()
                 .identity()
                 .translate(
-                        object.getPozX(),
-                        object.getPozY(),
-                        object.getPozZ()
+                        graphicsObject.getPozX(),
+                        graphicsObject.getPozY(),
+                        graphicsObject.getPozZ()
                 )
                 .rotateXYZ(
-                        (float) Math.toRadians(object.getRotX()),
-                        (float) Math.toRadians(object.getRotY()),
-                        (float) Math.toRadians(object.getRotZ())
+                        (float) Math.toRadians(graphicsObject.getRotX()),
+                        (float) Math.toRadians(graphicsObject.getRotY()),
+                        (float) Math.toRadians(graphicsObject.getRotZ())
                 )
                 .scale(
-                        object.getScaleX(),
-                        object.getScaleY(),
-                        object.getScaleZ()
+                        graphicsObject.getScaleX(),
+                        graphicsObject.getScaleY(),
+                        graphicsObject.getScaleZ()
                 );
 
         shaderProgram.use();
@@ -53,7 +53,7 @@ public class Renderer
                 camera.getProjectionMatrix()
         );
 
-        object.draw();
+        graphicsObject.draw();
 
         shaderProgram.unbind();
     }
